@@ -1,0 +1,38 @@
+{
+  "name": "node-backend",
+  "version": "1.0.0",
+  "description": "The API of Kinyarwanda.net",
+  "main": "index.js",
+  "scripts": {
+    "start": " nodemon --require babel-register  index.js",
+    "dev": "NODE_ENV=development nodemon --require babel-register index.js",
+    "production": "NODE_ENV=production nodemon --require babel-register index.js",
+    "test": "NODE_ENV=test mocha --require babel-register tests/* --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kinyarwanda-net/python-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kinyarwanda-net/python-backend/issues"
+  },
+  "homepage": "https://github.com/kinyarwanda-net/python-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^7.0.1",
+    "nodemon": "^2.0.2"
+  }
+}
