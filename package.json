@@ -4,10 +4,11 @@
   "description": "The API of Kinyarwanda.net",
   "main": "index.js",
   "scripts": {
-    "start": " nodemon --require babel-register  index.js",
-    "dev": "NODE_ENV=development nodemon --require babel-register index.js",
-    "production": "NODE_ENV=production nodemon --require babel-register index.js",
-    "test": "NODE_ENV=test mocha --require babel-register tests/* --exit"
+    "start": "npm run dev",
+    "dev": "NODE_ENV=development nodemon --exec babel-node src/index.js",
+    "build": "babel src --out-dir dist",
+    "test": "NODE_ENV=test mocha --require babel-register tests/* --exit",
+    "serve": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,12 +24,14 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
-    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
