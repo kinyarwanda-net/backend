@@ -1,0 +1,15 @@
+{
+    "extends": "tslint-config-airbnb",
+    "jsRules": {
+        "eofline": true
+    },
+    "rules": {
+        "import-name": [
+            false
+        ],
+        "max-line-length": [
+            true,
+            150
+        ]
+    }
+}
