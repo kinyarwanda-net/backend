@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import api from './api/routes';
+import db from './config/db';
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,14 @@ app.use((req, res) =>{
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`The server started and is listening on ${port}`));
+db.connect((err) => {
+  if (!err) {
+    console.log('Database connection successful.');
+    app.listen(port, () => console.log(`Server listening on port ${port}`));
+  } else {
+    console.log(err);
+  }
+})
+
 
 export default app;
