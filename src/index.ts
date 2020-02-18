@@ -1,14 +1,16 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
 
 import routes from './api/routes';
-import db from './config/db';
+import { Database } from './inc/Database';
 
 dotenv.config();
 
 const app = express();
+
+const db = Database.getInstance();
 
 app
   .use(express.json())
@@ -26,7 +28,7 @@ app.use((req, res) => {
 
 const port = process.env.PORT || 5000;
 
-db.connect((err) => {
+db.connection.connect((err: any) => {
   if (!err) {
     console.log('Database connection successful.');
     app.listen(port, () => console.log(`Server listening on port ${port}`));

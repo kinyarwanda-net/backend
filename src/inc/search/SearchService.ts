@@ -1,4 +1,4 @@
-import db from '../config/db';
+import db from '../Database';
 import { OrderBy } from './Query';
 
 class SearchService {

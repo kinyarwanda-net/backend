@@ -3,5 +3,9 @@
     "jsRules": {
         "eofline": true
     },
-    "rules": {}
+    "rules": {
+        "import-name": [
+            false
+        ]
+    }
 }
