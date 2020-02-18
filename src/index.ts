@@ -3,10 +3,9 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import api from './api/routes';
+import routes from './api/routes';
 import db from './config/db';
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -16,12 +15,12 @@ app
   .use(cors())
   .use(morgan('dev'));
 
-app.use('/api', api);
+app.use('/api', routes);
 
-app.use((req, res) =>{
+app.use((req, res) => {
   res.status(404).send({
     status: 404,
-    error: 'Resource not found'
+    error: 'Resource not found',
   });
 });
 
@@ -34,7 +33,6 @@ db.connect((err) => {
   } else {
     console.log(err);
   }
-})
-
+});
 
 export default app;

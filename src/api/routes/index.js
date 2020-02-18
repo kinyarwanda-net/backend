@@ -2,8 +2,8 @@ import express from 'express';
 
 import searchRouter from '../routes/search.router';
 
-const api = express();
+const routes = express();
 
-api.use('/search', searchRouter)
+routes.use('/search', searchRouter)
 
-export default api;
+export default routes;

@@ -1,0 +1,7 @@
+{
+    "extends": "tslint-config-airbnb",
+    "jsRules": {
+        "eofline": true
+    },
+    "rules": {}
+}
