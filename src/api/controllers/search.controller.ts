@@ -1,11 +1,10 @@
+import { Request, Response } from 'express';
 
 class SearchController {
   constructor() {}
 
-  async search(req, res) {
+  async search(req: Request, res: Response) {
     const { q: query } = req.query;
-
-    
 
     const searchResult = {
       query,
@@ -17,8 +16,8 @@ class SearchController {
           wordclass: 'v',
           nounclasses: [],
           meanings: ['stop producing milk (cow)', 'finish a harvest'],
-        }
-      }]
+        },
+      }],
     };
 
     return res.status(200).json(searchResult);
