@@ -1,4 +1,4 @@
-# Besty - API
+# iKinyarwanda.net - API
 
 
 iKinyarwanda.net is a Node/MySQL based platform for creating online dictionaries. 
