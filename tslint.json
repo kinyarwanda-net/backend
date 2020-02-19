@@ -6,6 +6,10 @@
     "rules": {
         "import-name": [
             false
+        ],
+        "max-line-length": [
+            true,
+            150
         ]
     }
 }

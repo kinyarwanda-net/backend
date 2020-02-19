@@ -45,11 +45,11 @@ export class Query {
 
     const wordClass = this.readParameter('wclass');
 
-    const nounClass = this.readParameter('nclass') === 0 ? null : this.readParameter('nclass');
+    const nounClass = parseInt(this.readParameter('nclass'), 10) === 0 ? null : parseInt(this.readParameter('nclass'), 10);
 
     const verified = parseBool(this.readParameter('verified'));
 
-    const has = this.readParameter('has').toUpperCase();
+    const has: string = this.readParameter('has').toUpperCase();
     const hasMedia = has in Media ? parseInt(Media[has], 10) : null;
 
     const order = this.readParameter('order').toUpperCase();
@@ -81,11 +81,52 @@ export class Query {
     );
   }
 
-  private static readParameter(name: string, defaultTo = null) {
+  /**
+	 * Reads a parameter from the query
+	 * @param string name the name of the parameter
+	 * @param string defaultTo the default value
+	 * @return string the parameter value
+	 */
+  private static readParameter(name: string, defaultTo = null): string {
     return this.parsedParams[name] ? this.parsedParams[name] : defaultTo;
   }
 
-  getPattern () {
+  /**
+	 * Gets the pattern
+	 */
+  getPattern() {
     return this.pattern;
+  }
+
+  /**
+	 * Gets the relationship
+	 * @return Relationship the relationship
+	 */
+  getRelationship(): Relationship | null {
+    return this.relationship;
+  }
+
+  /**
+	 * Gets if query is for a partial match
+	 * @return bool TRUE if is partial match, else FALSE
+	 */
+  isPartialMatch(): boolean | null {
+    return this.partialMatch;
+  }
+
+  /**
+	 * Gets the order by
+	 * @return int the order by
+	 */
+  getOrderBy(): number | null {
+    return this.orderBy;
+  }
+
+  /**
+	 * Gets the language code
+	 * @return string the language code
+	 */
+  getLang() {
+    return this.lang;
   }
 }

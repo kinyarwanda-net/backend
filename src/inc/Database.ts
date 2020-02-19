@@ -22,7 +22,7 @@ export class Database {
     this.connection = mysql.createConnection(this.mysqlConfig);
   }
 
-  static getInstance() {
+  static getInstance(): Database {
     return new Database(
       Number(process.env.DB_PORT),
       process.env.DB_HOST as string,
