@@ -1,5 +1,7 @@
 import parseBool from '../../lib/parseBool';
 import { Media } from '../entry/Entry';
+import { Dictionary } from '../../inc/Dictionary';
+import { Relationship } from '../../inc/tag/Relationship';
 
 export enum OrderBy {
   ENTRY = 0,
@@ -14,15 +16,15 @@ export class Query {
 
   constructor (
     private pattern: string,
-    private lang,
-    private relationship,
-    private partialMatch = null,
-    private wordClass,
-    private nounClass,
-    private verified,
-    private hasMedia,
-    private orderBy,
-    private rawQuery,
+    private lang: string,
+    private relationship: Relationship | null,
+    private partialMatch: boolean | null = null,
+    private wordClass: string,
+    private nounClass: number | null,
+    private verified: boolean,
+    private hasMedia: number | null,
+    private orderBy: number | null,
+    private rawQuery: string,
   ) { }
 
   static parse (string: string) {
@@ -48,15 +50,35 @@ export class Query {
     const verified = parseBool(this.readParameter('verified'));
 
     const has = this.readParameter('has').toUpperCase();
-    const hasMedia = has in Media ? Media[has] : null;
+    const hasMedia = has in Media ? parseInt(Media[has], 10) : null;
 
     const order = this.readParameter('order').toUpperCase();
-    const orderBy = order in OrderBy ? OrderBy[order] : null;
+    const orderBy = order in OrderBy ? parseInt(OrderBy[order], 10) : null;
 
     const match = this.readParameter('match');
-    // TODO: Implement Dictionary dependency
-    // const relationship = 
+    let relationship: Relationship | null = null;
+    if (match) {
+      Dictionary
+        .getTagService()
+        .getRelationshipByName(match, (err: any, result: any) => {
+          if (!err && result) {
+            relationship = result;
+          }
+        });
+    }
 
+    return new Query(
+      pattern,
+      lang,
+      relationship,
+      partialMatch,
+      wordClass,
+      nounClass,
+      verified,
+      hasMedia,
+      orderBy,
+      string,
+    );
   }
 
   private static readParameter(name: string, defaultTo = null) {
