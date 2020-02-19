@@ -1,4 +1,5 @@
 import mysql, { ConnectionConfig, Connection } from 'mysql';
+import { Entity } from '../lib/Entity';
 
 export class Database {
   public connection: Connection;
@@ -22,7 +23,36 @@ export class Database {
     this.connection = mysql.createConnection(this.mysqlConfig);
   }
 
-  static getInstance() {
+  escape(val: any) {
+    if (!val) {
+      return 'NULL';
+    }
+
+    if (Number(val)) {
+      return val;
+    }
+
+    // TODO: Write entity abtract class
+    if (val instanceof Entity) {
+      return val.getId();
+    }
+
+    return `${this.connection.escape(val)}`;
+  }
+
+  query(sql: string): Promise<any | any[]> {
+    return new Promise((resolve, reject) => {
+      this.connection.query(sql, (err: any, results: any[]) => {
+        if (!err && results) {
+          resolve(results[0]);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  static getInstance(): Database {
     return new Database(
       Number(process.env.DB_PORT),
       process.env.DB_HOST as string,

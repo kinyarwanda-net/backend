@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
+import { creatSearchClassAsync } from '../../inc/search/Search';
 
 class SearchController {
   constructor() {}
 
   async search(req: Request, res: Response) {
     const { q: query } = req.query;
+
+    const search = await creatSearchClassAsync(query);
+    await search.run();
+
+    console.log('Search Result', search);
 
     const searchResult = {
       query,
