@@ -44,7 +44,7 @@ export class Database {
     return new Promise((resolve, reject) => {
       this.connection.query(sql, (err: any, results: any[]) => {
         if (!err && results) {
-          resolve(results[0]);
+          resolve(results);
         } else {
           reject(err);
         }

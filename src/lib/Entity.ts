@@ -13,7 +13,7 @@ export abstract class Entity {
 	 * Gets the id
 	 * @return int the id
 	 */
-  getId () {
+  getId = () => {
     return this.id;
   }
 
@@ -22,11 +22,7 @@ export abstract class Entity {
 	 * @param resource result the database query result
 	 * @return array the entities
 	 */
-  static fromQuery(rows: any[]) {
-    return rows.map((row: any) => this.fromRow(row));
-  }
+  static fromQuery(rows: any[]): any {}
 
-  static fromRow(row: any): Entity {
-    return {} as Entity;
-  }
+  static fromRow(row: any): any {}
 }

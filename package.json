@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run start:dev",
+    "start:debug": "NODE_ENV=development DEBUG=log nodemon --config nodemon-debug.json",
     "start:dev": "NODE_ENV=development nodemon",
     "build": "npm run clean && tsc -b tsconfig.build.json",
     "test": "NODE_ENV=test mocha --require babel-register tests/* --exit",

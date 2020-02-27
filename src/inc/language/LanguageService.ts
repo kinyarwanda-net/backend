@@ -10,12 +10,12 @@ import { Language } from './Language';
  */
 export class LanguageService extends Service {
   async getLanguages(withTranslation = null, withLexical: boolean | null = null) {
-    let sql = `SELECT L.* FROM ${Constants.KUMVA_DB_PREFIX}language l WHERE 1=1`;
+    let sql = `SELECT l.* FROM ${Constants.KUMVA_DB_PREFIX}language l WHERE 1=1`;
     if (withTranslation) {
       sql += ' AND l.hastranslation = 1 ';
     }
     if (withLexical) {
-      sql += 'AND l.haslexical = 1 ';
+      sql += ' AND l.haslexical = 1 ';
     }
 
     sql += 'ORDER BY name';

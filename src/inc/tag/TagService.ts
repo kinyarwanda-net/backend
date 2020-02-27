@@ -36,7 +36,8 @@ export class TagService extends Service {
     sql += 'ORDER BY relationship_id';
 
     const results = await this.database.query(sql);
-    return results;
+
+    return Relationship.fromQuery(results);
 
     // this.connection.query(sql, (err, results, fields) => {
     //   if (!err && results) {

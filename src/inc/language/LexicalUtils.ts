@@ -1,7 +1,7 @@
 import { stringObj } from '../../lib/porterToStemmer';
 
 export class LexicalUtils {
-  private static punctuation = ['-', ',', "'", ' ', '"', '!', '.', '?', '`'];
+  private static punctuation = ['-', ',', "'", ' ', '"', '!', '.', '\\?', '`'];
 
   /**
 	 * Replaces the a suffix if it occurs at the end of the given word

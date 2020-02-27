@@ -13,7 +13,7 @@ export enum SearchType {
 
 interface ISearch {
   // dictionary: any;
-  query: Query;
+  query: any;
   defaultOrderBy: number;
   results: any;
   iteration: any;
@@ -26,9 +26,9 @@ interface ISearch {
  */
 class Search implements ISearch {
   // public dictionary;
-  public query: any = {};
+  public query: Query | null | undefined = null;
   public defaultOrderBy: number = OrderBy.ENTRY;
-  public results: any = null;
+  public results: any[] | null | undefined = null;
   public iteration: number = 0;
   public suggestion: any = {};
   public time = 0;
@@ -47,25 +47,27 @@ class Search implements ISearch {
     const initSearchType = this.query?.isPartialMatch() ? SearchType.FORM : SearchType.STEM;
     const orderBy = this.query?.getOrderBy() ? this.query?.getOrderBy() : this.defaultOrderBy;
 
-    this.results = await Dictionary.getSearchService().search(this.query, initSearchType, orderBy);
+    this.results = this.query ? await Dictionary.getSearchService().search(this.query, initSearchType, orderBy) : null;
     this.iteration = 1;
 
     // Only do smart search if this is not a partial match, we didn't find anything yet, and the pattern is long enough
-    const doSmartSearch = !this.query?.isPartialMatch() && this.results && (this.query.getPattern().length >= this.MIN_SMART_QUERY_LEN);
+    const doSmartSearch = this.query
+    ? !this.query.isPartialMatch() && this.results && (this.query.getPattern().length >= this.MIN_SMART_QUERY_LEN)
+    : false;
 
     if (doSmartSearch && this.hasResults()) {
       // Do sounds-like search
-      this.results = await Dictionary.getSearchService().search(this.query, SearchType.SOUND, orderBy);
+      this.results = this.query ? await Dictionary.getSearchService().search(this.query, SearchType.SOUND, orderBy) : null;
       this.iteration = 2;
 
       // If that fails to find results then perform suggestions search
-      if (!this.hasResults) {
+      if (!this.hasResults()) {
         // Clone query object to create suggestion query
         this.suggestion = { ...this.query } as Query;
 
         // Create suggestions based on query language
-        const suggestionsLang = this.query?.getLang() ? this.query?.getLang() : Constants.KUMVA_LANG_DEFS;
-        const suggestions: any[] = Lexical.suggestions(suggestionsLang, this.query?.getPattern());
+        const suggestionsLang = this.query ? this.query.getLang() : Constants.KUMVA_LANG_DEFS;
+        const suggestions: any[] = this.query ? Lexical.suggestions(suggestionsLang, this.query.getPattern()) : [];
 
         suggestions.forEach(async (suggestion) => {
           this.suggestion.setPattern(suggestion);
@@ -81,7 +83,14 @@ class Search implements ISearch {
 	 * Gets whether search returned any results
 	 */
   hasResults() {
-    return this.results !== null && (this.results.length > 0);
+    return this.results && (this.results.length > 0);
+  }
+
+  /**
+	 * Gets the results as array of revisions
+	 */
+  getResults() {
+    return this.results;
   }
 }
 
@@ -94,8 +103,6 @@ export async function creatSearchClassAsync(searchString: string): Promise<Searc
   const search = new Search();
 
   search.query = await Query.parse(searchString);
-  // TODO: Implement paging
-
   // If the user has specified a pattern and not a match relationship then default to relevance ordering
   search.defaultOrderBy = search.query.getPattern() && !search.query.getRelationship() ? OrderBy.RELEVANCE : OrderBy.ENTRY;
 

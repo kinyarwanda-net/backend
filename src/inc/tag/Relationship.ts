@@ -13,7 +13,7 @@ export class Relationship extends Entity {
 	 * @param string defaultLang the default language code, e.g. 'rw'
 	 */
   constructor(
-    protected id: number,
+    id: number,
     private name: string,
     private title: string,
     private description: string,
@@ -24,12 +24,16 @@ export class Relationship extends Entity {
     super(id);
   }
 
+  static fromQuery(rows: any[]) {
+    return rows.map(row => this.fromRow(row));
+  }
+
   /**
 	 * Creates a relationship from the given row of database columns
 	 * @param row Result object
 	 * @return Relationship the relationship
 	 */
-  static fromRow(row: any): Relationship {
+  static fromRow(row: any) {
     return new Relationship(
       row['relationship_id'],
       row['name'],

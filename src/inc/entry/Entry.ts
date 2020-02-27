@@ -15,7 +15,7 @@ export class Entry extends Entity {
 	 * @param int media the media flags
 	 */
   constructor (
-    protected id: number = 0,
+    id: number = 0,
     private media: number = 0,
   ) {
     super(id);
@@ -30,7 +30,23 @@ export class Entry extends Entity {
 	 * @param array the associative array
 	 * @return Entry the entry
 	 */
-  fromRow(row: any) {
+  static fromRow(row: any) {
     return new Entry(row['entry_id'], row['media']);
+  }
+
+  /**
+	 * Gets the media flags
+	 * @return int the media flags
+	 */
+  getMedia() {
+    return this.media;
+  }
+
+  /**
+   * Sets the media flags
+   * @param int media the media flags
+   */
+  setMedia(media: number) {
+    this.media = media;
   }
 }
