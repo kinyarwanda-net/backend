@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/kinyarwanda-net/backend.svg?style=svg)](https://circleci.com/gh/kinyarwanda-net/backend)
-# Besty - API
+# iKinyarwanda.net - API
 
 
 iKinyarwanda.net is a Node/MySQL based platform for creating online dictionaries. 
