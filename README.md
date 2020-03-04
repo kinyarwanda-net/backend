@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/kinyarwanda-net/backend.svg?style=svg)](https://circleci.com/gh/kinyarwanda-net/backend)
 # iKinyarwanda.net - API
 
 
